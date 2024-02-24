@@ -10,4 +10,5 @@ public class ApplicationDbContext(DbContextOptions dbContextOptions) : DbContext
     public DbSet<PublishingHouse> PublishingHouses { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<BookGenre> BookGenres { get; set; } 
+    public DbSet<Series> Series { get; set; }
 };

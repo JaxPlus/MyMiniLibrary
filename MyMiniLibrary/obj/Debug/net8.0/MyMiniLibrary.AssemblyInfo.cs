@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyMiniLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dcaebfe7c81860790cb0becded9c8d4232c8815")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec4ec43c1d7bf54f2d123a26edf2ecd30bf4b03f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyMiniLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyMiniLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

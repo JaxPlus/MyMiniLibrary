@@ -59,6 +59,9 @@ namespace MyMiniLibrary.Migrations
                     b.Property<int>("PublishingHouseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SeriesId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Volume")
                         .HasColumnType("int");
 
@@ -67,6 +70,8 @@ namespace MyMiniLibrary.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("PublishingHouseId");
+
+                    b.HasIndex("SeriesId");
 
                     b.ToTable("Books");
                 });
@@ -128,6 +133,23 @@ namespace MyMiniLibrary.Migrations
                     b.ToTable("PublishingHouses");
                 });
 
+            modelBuilder.Entity("MyMiniLibrary.Models.Series", b =>
+                {
+                    b.Property<int>("SeriesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeriesId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SeriesId");
+
+                    b.ToTable("Series");
+                });
+
             modelBuilder.Entity("MyMiniLibrary.Models.Book", b =>
                 {
                     b.HasOne("MyMiniLibrary.Models.Author", "Author")
@@ -142,9 +164,17 @@ namespace MyMiniLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MyMiniLibrary.Models.Series", "Series")
+                        .WithMany()
+                        .HasForeignKey("SeriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Author");
 
                     b.Navigation("PublishingHouse");
+
+                    b.Navigation("Series");
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.BookGenre", b =>

@@ -8,6 +8,8 @@ public class Book
     public string Name { get; set; } = string.Empty;
     [Column(TypeName = "decimal(5,2)")]
     public double Price { get; set; }
+    public int SeriesId { get; set; }
+    public Series Series { get; set; } = new();
     public int AuthorId { get; set; }
     public Author Author { get; set; } = new();
     public int PublishingHouseId { get; set; }
