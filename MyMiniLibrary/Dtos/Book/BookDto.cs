@@ -2,7 +2,6 @@
 
 public class BookDto
 {
-    public int BookId { get; set; }
     public string Name { get; set; } = string.Empty;
     public double Price { get; set; }
     public int AuthorId { get; set; }

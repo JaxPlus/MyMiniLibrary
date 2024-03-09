@@ -9,7 +9,6 @@ public static class BookMappers
     {
         return new BookDto
         {
-            BookId = bookModel.BookId,
             Name = bookModel.Name,
             AuthorId = bookModel.AuthorId,
             Author = bookModel.Author,

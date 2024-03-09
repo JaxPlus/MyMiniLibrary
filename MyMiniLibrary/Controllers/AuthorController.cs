@@ -16,12 +16,12 @@ public class AuthorController(ApplicationDbContext context) : ControllerBase
         return Ok(authors);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public IActionResult GetById([FromRoute] int id)
     {
-        var author = context.Authors.Find(id);
+        var authorModel = context.Authors.Find(id);
 
-        return author == null ? NotFound() : Ok(author);
+        return authorModel == null ? NotFound() : Ok(authorModel);
     }
 
     [HttpPost]
@@ -30,6 +30,33 @@ public class AuthorController(ApplicationDbContext context) : ControllerBase
         var authorModel = authorDto.ToAuthorFromCreateDto();
         context.Add(authorModel);
         context.SaveChanges();
-        return CreatedAtAction(nameof(GetById), new { authorId = authorModel.AuthorId }, authorModel);
+        return CreatedAtAction(nameof(Create), new { authorId = authorModel.AuthorId }, authorModel);
+    }
+
+    [HttpPut("{id:int}")]
+    public IActionResult Update([FromRoute] int id, [FromBody] UpdateAuthorRequestDto authorDto) {
+        var authorModel = context.Authors.FirstOrDefault(x => x.AuthorId == id);
+
+        if (authorModel == null) {
+            return NotFound();
+        }
+
+        authorModel.Name = authorDto.Name;
+
+        context.SaveChanges();
+        return Ok(authorModel.ToAuthorDto());
+    }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult Delete([FromRoute] int id) {
+        var authorModel = context.Authors.FirstOrDefault(x => x.AuthorId == id);
+
+        if (authorModel == null) {
+            return NotFound();
+        }
+
+        context.Authors.Remove(authorModel);
+        context.SaveChanges();
+        return NoContent();
     }
 }

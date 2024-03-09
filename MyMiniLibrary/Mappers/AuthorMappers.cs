@@ -5,11 +5,18 @@ namespace MyMiniLibrary.Mappers;
 
 public static class AuthorMappers
 {
-    public static Author ToAuthorFromCreateDto(this CreateAuthorRequestDto authorDto)
-    {
+    public static Author ToAuthorDto(this Author authorModel) {
         return new Author
         {
-            Name = authorDto.Name
+            AuthorId = authorModel.AuthorId,
+            Name = authorModel.Name
+        };
+    }
+    
+    public static Author ToAuthorFromCreateDto(this CreateAuthorRequestDto authorModel) {
+        return new Author
+        {
+            Name = authorModel.Name
         };
     }
 }
