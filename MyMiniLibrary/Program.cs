@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using MyMiniLibrary.Data;
+using MyMiniLibrary.Interfaces;
+using MyMiniLibrary.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

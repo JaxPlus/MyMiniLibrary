@@ -1,5 +1,5 @@
-﻿namespace MyMiniLibrary.Dtos.Series;
+﻿using MyMiniLibrary.Dtos.Common;
 
-public class CreateSeriesRequestDto {
-    public string Name { get; set; } = string.Empty;
-}
+namespace MyMiniLibrary.Dtos.Series;
+
+public class CreateSeriesRequestDto : CommonDto;

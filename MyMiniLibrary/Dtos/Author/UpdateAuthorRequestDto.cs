@@ -1,5 +1,5 @@
-﻿namespace MyMiniLibrary.Dtos.Author;
+﻿using MyMiniLibrary.Dtos.Common;
 
-public class UpdateAuthorRequestDto {
-    public string Name { get; set; } = string.Empty;
-}
+namespace MyMiniLibrary.Dtos.Author;
+
+public class UpdateAuthorRequestDto : CommonDto;

@@ -1,8 +1,9 @@
-﻿namespace MyMiniLibrary.Dtos.Book;
+﻿using MyMiniLibrary.Dtos.Common;
 
-public class BookDto
+namespace MyMiniLibrary.Dtos.Book;
+
+public class BookDto : CommonDto
 {
-    public string Name { get; set; } = string.Empty;
     public double Price { get; set; }
     public int AuthorId { get; set; }
     public Models.Author Author { get; set; } = new();

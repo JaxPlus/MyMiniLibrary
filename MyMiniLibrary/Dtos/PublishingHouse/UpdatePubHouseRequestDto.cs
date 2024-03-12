@@ -1,5 +1,5 @@
-﻿namespace MyMiniLibrary.Dtos.PublishingHouse;
+﻿using MyMiniLibrary.Dtos.Common;
 
-public class UpdatePubHouseRequestDto {
-    public string Name { get; set; } = string.Empty;
-}
+namespace MyMiniLibrary.Dtos.PublishingHouse;
+
+public class UpdatePubHouseRequestDto : CommonDto;
