@@ -1,62 +1,53 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyMiniLibrary.Data;
 using MyMiniLibrary.Dtos.Series;
+using MyMiniLibrary.Interfaces;
 using MyMiniLibrary.Mappers;
 
 namespace MyMiniLibrary.Controllers;
 
 [Route("api/series")]
 [ApiController]
-public class SeriesController(ApplicationDbContext context) : ControllerBase {
+public class SeriesController(ISeriesRepository seriesRepo) : ControllerBase {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var series = await context.Series.ToListAsync();
+    public async Task<IActionResult> GetAll() {
+        var series = await seriesRepo.GetAllAsync();
         return Ok(series);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById([FromRoute] int id)
-    {
-        var seriesModel = await context.Series.FindAsync(id);
+    public async Task<IActionResult> GetById([FromRoute] int id) {
+        var seriesModel = await seriesRepo.GetByIdAsync(id);
 
         return seriesModel == null ? NotFound() : Ok(seriesModel);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateSeriesRequestDto seriesDto)
-    {
+    public async Task<IActionResult> Create([FromBody] CreateSeriesRequestDto seriesDto) {
         var seriesModel = seriesDto.ToSeriesFromCreateDto();
-        await context.AddAsync(seriesModel);
-        await context.SaveChangesAsync();
+
+        await seriesRepo.CreateAsync(seriesModel);
         return CreatedAtAction(nameof(Create), new { seriesId = seriesModel.SeriesId }, seriesModel);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateSeriesRequestDto seriesDto) {
-        var seriesModel = await context.Series.FirstOrDefaultAsync(x => x.SeriesId == id);
+        var seriesModel = await seriesRepo.UpdateAsync(id, seriesDto);
 
         if (seriesModel == null) {
             return NotFound();
         }
 
-        seriesModel.Name = seriesDto.Name;
-
-        await context.SaveChangesAsync();
-        return Ok(seriesModel.ToSeriesDto());
+        return Ok(seriesModel);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id) {
-        var seriesModel = await context.Series.FirstOrDefaultAsync(x => x.SeriesId == id);
+        var seriesModel = await seriesRepo.DeleteAsync(id);
 
         if (seriesModel == null) {
             return NotFound();
         }
-
-        context.Series.Remove(seriesModel);
-        await context.SaveChangesAsync();
+        
         return NoContent();
     }
 }

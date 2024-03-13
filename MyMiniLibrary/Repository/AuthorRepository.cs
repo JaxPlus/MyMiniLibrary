@@ -15,12 +15,6 @@ public class AuthorRepository(ApplicationDbContext context) : IAuthorRepository 
         return await context.Authors.FindAsync(id);
     }
 
-    public async Task<Author> CreateAsync(Author authorModel) {
-        await context.Authors.AddAsync(authorModel);
-        await context.SaveChangesAsync();
-        return authorModel;
-    }
-
     public async Task<Author?> UpdateAsync(int id, CommonDto dto) {
         var authorModel = await context.Authors.FirstOrDefaultAsync(x => x.AuthorId == id);
 
@@ -33,7 +27,13 @@ public class AuthorRepository(ApplicationDbContext context) : IAuthorRepository 
         await context.SaveChangesAsync();
         return authorModel;
     }
-    
+
+    public async Task<Author> CreateAsync(Author authorModel) {
+        await context.Authors.AddAsync(authorModel);
+        await context.SaveChangesAsync();
+        return authorModel;
+    }
+
     public async Task<Author?> DeleteAsync(int id) {
         var authorModel = await context.Authors.FirstOrDefaultAsync(x => x.AuthorId == id);
         

@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyMiniLibrary.Data;
 using MyMiniLibrary.Dtos.Author;
 using MyMiniLibrary.Interfaces;
 using MyMiniLibrary.Mappers;
-using MyMiniLibrary.Repository;
 
 namespace MyMiniLibrary.Controllers;
 

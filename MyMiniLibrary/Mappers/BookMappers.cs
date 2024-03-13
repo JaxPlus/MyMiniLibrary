@@ -10,10 +10,12 @@ public static class BookMappers
         return new BookDto
         {
             Name = bookModel.Name,
-            AuthorId = bookModel.AuthorId,
-            Author = bookModel.Author,
             Price = bookModel.Price,
             Volume = bookModel.Volume,
+            AuthorId = bookModel.AuthorId,
+            Author = bookModel.Author,
+            SeriesId = bookModel.SeriesId,
+            Series = bookModel.Series,
         };
     }
 }

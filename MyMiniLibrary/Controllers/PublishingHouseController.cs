@@ -1,35 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyMiniLibrary.Data;
 using MyMiniLibrary.Dtos.PublishingHouse;
+using MyMiniLibrary.Interfaces;
 using MyMiniLibrary.Mappers;
 
 namespace MyMiniLibrary.Controllers;
 
 [Route("api/publishing-house")]
 [ApiController]
-public class PublishingHouseController(ApplicationDbContext context) : ControllerBase {
+public class PublishingHouseController(IPublishingHouseRepository pubHouseRepo) : ControllerBase {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var publishingHouses = await context.PublishingHouses.ToListAsync();
+    public async Task<IActionResult> GetAll() {
+        var publishingHouses = await pubHouseRepo.GetAllAsync();
         return Ok(publishingHouses);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById([FromRoute] int id)
-    {
-        var publishingHouseModel = await context.PublishingHouses.FindAsync(id);
+    public async Task<IActionResult> GetById([FromRoute] int id) {
+        var publishingHouseModel = await pubHouseRepo.GetByIdAsync(id);
 
         return publishingHouseModel == null ? NotFound() : Ok(publishingHouseModel);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreatePubHouseRequestDto pubHouseDto)
-    {
+    public async Task<IActionResult> Create([FromBody] CreatePubHouseRequestDto pubHouseDto) {
         var publishingHouseModel = pubHouseDto.ToPublishingHouseFromCreateDto();
-        await context.AddAsync(publishingHouseModel);
-        await context.SaveChangesAsync();
+
+        await pubHouseRepo.CreateAsync(publishingHouseModel);
         return CreatedAtAction(nameof(Create),
             new { publishingHouseId = publishingHouseModel.PublishingHouseId },
             publishingHouseModel);
@@ -37,28 +33,23 @@ public class PublishingHouseController(ApplicationDbContext context) : Controlle
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePubHouseRequestDto publishingHouseDto) {
-        var publishingHouseModel = await context.PublishingHouses.FirstOrDefaultAsync(x => x.PublishingHouseId == id);
+        var publishingHouseModel = await pubHouseRepo.UpdateAsync(id, publishingHouseDto);
 
         if (publishingHouseModel == null) {
             return NotFound();
         }
 
-        publishingHouseModel.Name = publishingHouseDto.Name;
-
-        await context.SaveChangesAsync();
-        return Ok(publishingHouseModel.ToPublishingHouseDto());
+        return Ok(publishingHouseModel);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id) {
-        var publishingHouseModel = await context.PublishingHouses.FirstOrDefaultAsync(x => x.PublishingHouseId == id);
+        var publishingHouseModel = await pubHouseRepo.DeleteAsync(id);
 
         if (publishingHouseModel == null) {
             return NotFound();
         }
-
-        context.PublishingHouses.Remove(publishingHouseModel);
-        await context.SaveChangesAsync();
+        
         return NoContent();
     }
 }
