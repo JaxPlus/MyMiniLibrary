@@ -4,11 +4,12 @@ using MyMiniLibrary.Models;
 namespace MyMiniLibrary.Mappers;
 
 public static class SeriesMapper {
-    public static Series ToSeriesDto(this Series seriesModel) {
-        return new Series
+    public static SeriesDto ToSeriesDto(this Series seriesModel) {
+        return new SeriesDto
         {
             SeriesId = seriesModel.SeriesId,
-            Name = seriesModel.Name
+            Name = seriesModel.Name,
+            Books = seriesModel.Books.Select(b => b.ToBookDto()).ToList()
         };
     }
 

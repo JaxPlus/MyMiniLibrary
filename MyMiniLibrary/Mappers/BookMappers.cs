@@ -9,13 +9,30 @@ public static class BookMappers
     {
         return new BookDto
         {
+            BookId = bookModel.BookId,
             Name = bookModel.Name,
             Price = bookModel.Price,
             Volume = bookModel.Volume,
+            // AuthorName = bookModel.Author.Name,
+            // SeriesName = bookModel.Series.Name,
             AuthorId = bookModel.AuthorId,
-            Author = bookModel.Author,
-            SeriesId = bookModel.SeriesId,
-            Series = bookModel.Series,
         };
     }
+    
+    public static Book ToBookFromCreate(this CreateBookRequestDto bookModel,
+        int authorId,
+        int seriesId,
+        int publishingHouseId)
+    {
+        return new Book
+        {
+            Name = bookModel.Name,
+            Price = bookModel.Price,
+            Volume = bookModel.Volume,
+            AuthorId = authorId,
+            SeriesId = seriesId,
+            PublishingHouseId = publishingHouseId,
+        };
+    }
+
 }

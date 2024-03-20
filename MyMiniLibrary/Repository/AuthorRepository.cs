@@ -8,15 +8,15 @@ namespace MyMiniLibrary.Repository;
 
 public class AuthorRepository(ApplicationDbContext context) : IAuthorRepository {
     public async Task<List<Author>> GetAllAsync() {
-        return await context.Authors.ToListAsync();
+        return await context.Authors.Include(b => b.Books).ToListAsync();
     }
 
     public async Task<Author?> GetByIdAsync(int id) {
-        return await context.Authors.FindAsync(id);
+        return await context.Authors.Include(b => b.Books).FirstOrDefaultAsync(a => a.AuthorId == id);
     }
 
     public async Task<Author?> UpdateAsync(int id, CommonDto dto) {
-        var authorModel = await context.Authors.FirstOrDefaultAsync(x => x.AuthorId == id);
+        var authorModel = await context.Authors.FirstOrDefaultAsync(a => a.AuthorId == id);
 
         if (authorModel == null) {
             return null;
@@ -35,7 +35,7 @@ public class AuthorRepository(ApplicationDbContext context) : IAuthorRepository 
     }
 
     public async Task<Author?> DeleteAsync(int id) {
-        var authorModel = await context.Authors.FirstOrDefaultAsync(x => x.AuthorId == id);
+        var authorModel = await context.Authors.FirstOrDefaultAsync(a => a.AuthorId == id);
         
         if (authorModel == null) {
             return null;
@@ -45,5 +45,9 @@ public class AuthorRepository(ApplicationDbContext context) : IAuthorRepository 
         await context.SaveChangesAsync();
 
         return authorModel;
+    }
+
+    public Task<bool> Exists(int id) {
+        return context.Authors.AnyAsync(a => a.AuthorId == id);
     }
 }

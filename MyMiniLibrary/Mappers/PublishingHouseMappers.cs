@@ -4,11 +4,12 @@ using MyMiniLibrary.Models;
 namespace MyMiniLibrary.Mappers;
 
 public static class PublishingHouseMappers {
-    public static PublishingHouse ToPublishingHouseDto(this PublishingHouse pubHouseModel) {
-        return new PublishingHouse
+    public static PublishingHouseDto ToPublishingHouseDto(this PublishingHouse pubHouseModel) {
+        return new PublishingHouseDto
         {
             PublishingHouseId = pubHouseModel.PublishingHouseId,
-            Name = pubHouseModel.Name
+            Name = pubHouseModel.Name,
+            Books = pubHouseModel.Books.Select(b => b.ToBookDto()).ToList(),
         };
     }
 

@@ -46,4 +46,8 @@ public class BookRepository(ApplicationDbContext context) : IBookRepository {
 
         return bookModel;
     }
+
+    public Task<bool> Exists(int id) {
+        return context.Books.AnyAsync(b => b.BookId == id);
+    }
 }

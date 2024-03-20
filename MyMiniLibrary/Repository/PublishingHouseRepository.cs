@@ -48,4 +48,8 @@ public class PublishingHouseRepository(ApplicationDbContext context) : IPublishi
 
         return publishingHouseModel;
     }
+
+    public Task<bool> Exists(int id) {
+        return context.PublishingHouses.AnyAsync(p => p.PublishingHouseId == id);
+    }
 }

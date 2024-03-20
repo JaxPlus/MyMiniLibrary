@@ -1,33 +1,50 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyMiniLibrary.Dtos.Book;
 using MyMiniLibrary.Interfaces;
+using MyMiniLibrary.Mappers;
 
 namespace MyMiniLibrary.Controllers;
 
 [Route("api/book")]
 [ApiController]
-public class BookController(IBookRepository bookRepo) : ControllerBase {
+public class BookController(IBookRepository bookRepo,
+            IAuthorRepository authorRepo,
+            ISeriesRepository seriesRepo,
+            IPublishingHouseRepository publishingHouseRepo)
+        : ControllerBase {
     [HttpGet]
     public async Task<IActionResult> GetAll() {
         var books = await bookRepo.GetAllAsync();
-        return Ok(books);
+        return Ok(books.Select(b => b.ToBookDto()).ToList());
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id) {
         var bookModel = await bookRepo.GetByIdAsync(id);
-
         return bookModel == null ? NotFound() : Ok(bookModel);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateBookRequestDto bookDto) {
-        throw new NotImplementedException();
+    [HttpPost("{authorId:int}/{seriesId:int}/{publishingHouseId:int}")]
+    public async Task<IActionResult> Create([FromRoute] int authorId,
+        [FromRoute] int seriesId,
+        [FromRoute] int publishingHouseId,
+        [FromBody] CreateBookRequestDto bookDto) {
+        if (!await authorRepo.Exists(authorId)) {
+            return BadRequest("Author does not exists");
+        }
+
+        if (!await seriesRepo.Exists(seriesId)) {
+            return BadRequest("Series does not exists");
+        }
+
+        if (!await publishingHouseRepo.Exists(publishingHouseId)) {
+            return BadRequest("Publishing House does not exists");
+        }
         
-        // var bookModel = bookDto.ToSeriesFromCreateDto();
-        //
-        // await bookRepo.CreateAsync(bookModel);
-        // return CreatedAtAction(nameof(Create), new { BookId = bookModel.BookId }, bookModel);
+        var bookModel = bookDto.ToBookFromCreate(authorId, seriesId, publishingHouseId);
+        
+        await bookRepo.CreateAsync(bookModel);
+        return CreatedAtAction(nameof(Create), new { bookId = bookModel.BookId }, bookModel.ToBookDto());
     }
 
     [HttpPut("{id:int}")]

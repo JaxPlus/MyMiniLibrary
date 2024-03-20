@@ -4,10 +4,10 @@ namespace MyMiniLibrary.Dtos.Book;
 
 public class BookDto : CommonDto
 {
+    public int BookId { get; set; }
     public double Price { get; set; }
     public int Volume { get; set; }
     public int AuthorId { get; set; }
-    public Models.Author Author { get; set; } = new();
-    public int SeriesId { get; set; }
-    public Models.Series Series { get; set; } = new();
+    // public string AuthorName { get; set; } = string.Empty;
+    // public string SeriesName { get; set; } = string.Empty;
 }

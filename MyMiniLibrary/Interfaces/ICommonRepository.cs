@@ -8,4 +8,5 @@ public interface ICommonRepository<T> {
     Task<T>       CreateAsync(T model);
     Task<T?>      UpdateAsync(int id, CommonDto dto);
     Task<T?>      DeleteAsync(int id);
+    Task<bool>    Exists(int id);
 }

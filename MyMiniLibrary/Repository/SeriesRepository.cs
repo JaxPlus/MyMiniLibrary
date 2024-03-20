@@ -48,4 +48,8 @@ public class SeriesRepository(ApplicationDbContext context) : ISeriesRepository 
 
         return seriesModel;
     }
+
+    public Task<bool> Exists(int id) {
+        return context.Series.AnyAsync(s => s.SeriesId == id);
+    }
 }

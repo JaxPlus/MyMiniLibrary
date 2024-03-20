@@ -20,7 +20,7 @@ public class AuthorController(IAuthorRepository authorRepo) : ControllerBase {
     public async Task<IActionResult> GetById([FromRoute] int id) {
         var authorModel = await authorRepo.GetByIdAsync(id);
 
-        return authorModel == null ? NotFound() : Ok(authorModel);
+        return authorModel == null ? NotFound() : Ok(authorModel.ToAuthorDto());
     }
 
     [HttpPost]
@@ -28,7 +28,7 @@ public class AuthorController(IAuthorRepository authorRepo) : ControllerBase {
         var authorModel = authorDto.ToAuthorFromCreateDto();
 
         await authorRepo.CreateAsync(authorModel);
-        return CreatedAtAction(nameof(Create), new { authorId = authorModel.AuthorId }, authorModel);
+        return CreatedAtAction(nameof(Create), new { authorId = authorModel.AuthorId }, authorModel.ToAuthorDto());
     }
 
     [HttpPut("{id:int}")]
