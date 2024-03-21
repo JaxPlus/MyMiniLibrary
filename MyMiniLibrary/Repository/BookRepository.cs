@@ -8,11 +8,19 @@ namespace MyMiniLibrary.Repository;
 
 public class BookRepository(ApplicationDbContext context) : IBookRepository {
     public async Task<List<Book>> GetAllAsync() {
-        return await context.Books.ToListAsync();
+        return await context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Series)
+            .Include(b => b.PublishingHouse)
+            .ToListAsync();
     }
 
     public async Task<Book?> GetByIdAsync(int id) {
-        return await context.Books.FindAsync(id);
+        return await context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Series)
+            .Include(b => b.PublishingHouse)
+            .FirstOrDefaultAsync(b => b.BookId == id);
     }
 
     public async Task<Book> CreateAsync(Book bookModel) {
@@ -49,5 +57,13 @@ public class BookRepository(ApplicationDbContext context) : IBookRepository {
 
     public Task<bool> Exists(int id) {
         return context.Books.AnyAsync(b => b.BookId == id);
+    }
+    
+    public async Task<double> SumOfAsync() {
+        return await context.Books.SumAsync(b => b.Price);
+    }
+
+    public async Task<int> CountAsync() {
+        return await context.Books.CountAsync();
     }
 }

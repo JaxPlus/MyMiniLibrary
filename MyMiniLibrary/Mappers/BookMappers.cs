@@ -13,9 +13,9 @@ public static class BookMappers
             Name = bookModel.Name,
             Price = bookModel.Price,
             Volume = bookModel.Volume,
-            // AuthorName = bookModel.Author.Name,
-            // SeriesName = bookModel.Series.Name,
-            AuthorId = bookModel.AuthorId,
+            AuthorName = bookModel.Author.Name,
+            SeriesName = bookModel.Series.Name,
+            PublishingHouseName = bookModel.PublishingHouse.Name,
         };
     }
     

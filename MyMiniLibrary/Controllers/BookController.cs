@@ -24,6 +24,17 @@ public class BookController(IBookRepository bookRepo,
         return bookModel == null ? NotFound() : Ok(bookModel);
     }
 
+    [HttpGet("/stats")]
+    public IActionResult GetStatisticData() {
+        var statisticsData = new StatisticsDataDto
+        {
+            SumOfPrice = bookRepo.SumOfAsync().Result,
+            BookCount = bookRepo.CountAsync().Result
+        };
+        
+        return Ok(statisticsData);
+    }
+
     [HttpPost("{authorId:int}/{seriesId:int}/{publishingHouseId:int}")]
     public async Task<IActionResult> Create([FromRoute] int authorId,
         [FromRoute] int seriesId,
@@ -50,13 +61,6 @@ public class BookController(IBookRepository bookRepo,
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto) {
         throw new NotImplementedException();
-        // var bookModel = await bookRepo.UpdateAsync(id, bookDto);
-        //
-        // if (bookModel == null) {
-        //     return NotFound();
-        // }
-        //
-        // return Ok(bookModel);
     }
 
     [HttpDelete("{id:int}")]

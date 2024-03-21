@@ -8,11 +8,11 @@ namespace MyMiniLibrary.Repository;
 
 public class AuthorRepository(ApplicationDbContext context) : IAuthorRepository {
     public async Task<List<Author>> GetAllAsync() {
-        return await context.Authors.Include(b => b.Books).ToListAsync();
+        return await context.Authors.ToListAsync();
     }
 
     public async Task<Author?> GetByIdAsync(int id) {
-        return await context.Authors.Include(b => b.Books).FirstOrDefaultAsync(a => a.AuthorId == id);
+        return await context.Authors.FindAsync(id);
     }
 
     public async Task<Author?> UpdateAsync(int id, CommonDto dto) {
