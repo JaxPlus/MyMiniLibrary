@@ -18,7 +18,15 @@ public static class BookMappers
             PublishingHouseName = bookModel.PublishingHouse.Name,
         };
     }
-    
+    public static CreateBookDto ToCreateBookDto(this Book bookModel) {
+        return new CreateBookDto
+        {
+            BookId = bookModel.BookId,
+            Name = bookModel.Name,
+            Price = bookModel.Price,
+            Volume = bookModel.Volume
+        };
+    }
     public static Book ToBookFromCreate(this CreateBookRequestDto bookModel,
         int authorId,
         int seriesId,
@@ -34,5 +42,4 @@ public static class BookMappers
             PublishingHouseId = publishingHouseId,
         };
     }
-
 }

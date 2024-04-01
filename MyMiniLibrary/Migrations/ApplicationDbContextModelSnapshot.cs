@@ -35,7 +35,7 @@ namespace MyMiniLibrary.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.Book", b =>
@@ -73,7 +73,7 @@ namespace MyMiniLibrary.Migrations
 
                     b.HasIndex("SeriesId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.BookGenre", b =>
@@ -96,7 +96,7 @@ namespace MyMiniLibrary.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("BookGenres");
+                    b.ToTable("BookGenres", (string)null);
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.Genre", b =>
@@ -113,7 +113,7 @@ namespace MyMiniLibrary.Migrations
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.PublishingHouse", b =>
@@ -130,7 +130,7 @@ namespace MyMiniLibrary.Migrations
 
                     b.HasKey("PublishingHouseId");
 
-                    b.ToTable("PublishingHouses");
+                    b.ToTable("PublishingHouses", (string)null);
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.Series", b =>
@@ -147,7 +147,7 @@ namespace MyMiniLibrary.Migrations
 
                     b.HasKey("SeriesId");
 
-                    b.ToTable("Series");
+                    b.ToTable("Series", (string)null);
                 });
 
             modelBuilder.Entity("MyMiniLibrary.Models.Book", b =>

@@ -55,7 +55,12 @@ public class BookController(IBookRepository bookRepo,
         var bookModel = bookDto.ToBookFromCreate(authorId, seriesId, publishingHouseId);
         
         await bookRepo.CreateAsync(bookModel);
-        return CreatedAtAction(nameof(GetById), new { bookId = bookModel.BookId }, bookModel.ToBookDto());
+        return CreatedAtAction(nameof(Create), new
+        {
+            authorId = bookModel.AuthorId,
+            seriesId = bookModel.SeriesId,
+            publishingHouseId = bookModel.PublishingHouseId
+        }, bookModel.ToCreateBookDto());
     }
 
     [HttpPut("{id:int}")]
@@ -63,7 +68,7 @@ public class BookController(IBookRepository bookRepo,
         var bookModel = await bookRepo.UpdateAsync(id, bookDto);
 
         if (bookModel == null) {
-            return NotFound();
+            return NotFound("Book does not exists");
         }
 
         return Ok(bookModel);
@@ -74,7 +79,7 @@ public class BookController(IBookRepository bookRepo,
         var bookModel = await bookRepo.DeleteAsync(id);
 
         if (bookModel == null) {
-            return NotFound();
+            return NotFound("Book does not exists");
         }
         
         return NoContent();
