@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jaxyt\\OneDrive\\Dokumenty\\Projekty\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj": {}
+    "C:\\Users\\Jan\\Documents\\Projects\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jaxyt\\OneDrive\\Dokumenty\\Projekty\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj": {
+    "C:\\Users\\Jan\\Documents\\Projects\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jaxyt\\OneDrive\\Dokumenty\\Projekty\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Jan\\Documents\\Projects\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj",
         "projectName": "MyMiniLibrary",
-        "projectPath": "C:\\Users\\jaxyt\\OneDrive\\Dokumenty\\Projekty\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj",
-        "packagesPath": "C:\\Users\\jaxyt\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jaxyt\\OneDrive\\Dokumenty\\Projekty\\MyMiniLibrary\\MyMiniLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Jan\\Documents\\Projects\\MyMiniLibrary\\MyMiniLibrary\\MyMiniLibrary.csproj",
+        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jan\\Documents\\Projects\\MyMiniLibrary\\MyMiniLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jaxyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -84,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

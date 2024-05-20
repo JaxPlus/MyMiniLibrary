@@ -27,19 +27,16 @@ public static class BookMappers
             Volume = bookModel.Volume
         };
     }
-    public static Book ToBookFromCreate(this CreateBookRequestDto bookModel,
-        int authorId,
-        int seriesId,
-        int publishingHouseId)
+    public static Book ToBookFromCreate(this CreateBookRequestDto bookModel)
     {
         return new Book
         {
             Name = bookModel.Name,
             Price = bookModel.Price,
             Volume = bookModel.Volume,
-            AuthorId = authorId,
-            SeriesId = seriesId,
-            PublishingHouseId = publishingHouseId,
+            AuthorId = bookModel.AuthorId,
+            SeriesId = bookModel.SeriesId,
+            PublishingHouseId = bookModel.PublishingHouseId,
         };
     }
 }

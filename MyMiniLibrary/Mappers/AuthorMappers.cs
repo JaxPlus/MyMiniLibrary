@@ -10,7 +10,6 @@ public static class AuthorMappers
         {
             AuthorId = authorModel.AuthorId,
             Name = authorModel.Name,
-            Books = authorModel.Books.Select(b => b.ToBookDto()).ToList(),
         };
     }
     

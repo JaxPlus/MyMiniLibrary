@@ -35,24 +35,21 @@ public class BookController(IBookRepository bookRepo,
         return Ok(statisticsData);
     }
 
-    [HttpPost("{authorId:int}/{seriesId:int}/{publishingHouseId:int}")]
-    public async Task<IActionResult> Create([FromRoute] int authorId,
-        [FromRoute] int seriesId,
-        [FromRoute] int publishingHouseId,
-        [FromBody] CreateBookRequestDto bookDto) {
-        if (!await authorRepo.Exists(authorId)) {
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateBookRequestDto bookDto) {
+        if (!await authorRepo.Exists(bookDto.AuthorId)) {
             return BadRequest("Author does not exists");
         }
 
-        if (!await seriesRepo.Exists(seriesId)) {
+        if (!await seriesRepo.Exists(bookDto.SeriesId)) {
             return BadRequest("Series does not exists");
         }
 
-        if (!await publishingHouseRepo.Exists(publishingHouseId)) {
+        if (!await publishingHouseRepo.Exists(bookDto.PublishingHouseId)) {
             return BadRequest("Publishing House does not exists");
         }
         
-        var bookModel = bookDto.ToBookFromCreate(authorId, seriesId, publishingHouseId);
+        var bookModel = bookDto.ToBookFromCreate();
         
         await bookRepo.CreateAsync(bookModel);
         return CreatedAtAction(nameof(Create), new
