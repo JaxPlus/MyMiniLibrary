@@ -31,6 +31,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.AccessControlAllowOrigin = "http://localhost:5174";
+    context.Response.Headers.AccessControlAllowCredentials = "true";
+    await next(context);
+});
+
+app.UseCors(options => options
+        .WithOrigins("http://localhost:5174")
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+
 app.UseHttpsRedirection();
 
 app.MapControllers();
