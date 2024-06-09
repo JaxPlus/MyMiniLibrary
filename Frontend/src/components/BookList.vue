@@ -30,9 +30,10 @@ async function getBooks() {
 
 <style scoped>
 .book-list {
-  display: flex;
-  flex-direction: row;
+  display: grid;
   padding: 0 10px 0 10px;
   align-items: flex-end;
+  grid-template-rows: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
 }
 </style>
