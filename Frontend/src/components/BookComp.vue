@@ -1,41 +1,46 @@
 ﻿<script setup lang="ts">
 import Book from "../Models/Book.ts";
-import { onMounted, ref } from "vue";
+import { ref, watch } from "vue";
 
 /** @todo PO NAJECHANIU MA WYŚWIETLAĆ SZCZEGÓŁY */
-const props = defineProps<{
+defineProps<{
   book: Book
 }>();
 
 const bookDescShow = ref(false);
-const className = ref("");
+const bookBg = ref<HTMLDivElement | undefined>(undefined);
 
-onMounted(() => {
-  className.value = "book";
+watch(bookBg, () => {  
+  bookBg.value?.focus();
 })
 </script>
 
 <template>
-  <div @click="bookDescShow = true" :class="className">
+  <div @click="bookDescShow = true" class="book">
     {{ book.name }}
   </div>
   
   <div v-if="bookDescShow" class="book-desc-container">
-    <button @click="bookDescShow = false">
-      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12L6 6m6 6l6 6m-6-6l6-6m-6 6l-6 6"/></svg>
-    </button>
+    <div ref="bookBg" @click="bookDescShow = false" @keydown.esc="bookDescShow = false" tabindex="0" class="book-bg" />
     <div class="book-desc">
-      <h2>{{ book.name }}</h2>
-      <p>Seria: {{ book.seriesName }}</p>
-      <p>Cena: {{ book.price }}zł</p>
-      <p>Autor: {{ book.authorName }}</p>
-      <p>Wydawca: {{ book.publishingHouseName }}</p>
+      <div>
+        <h2>{{ book.name }}</h2>
+        <p>Seria: {{ book.seriesName }}</p>
+        <p>Cena: {{ book.price }}zł</p>
+        <p>Autor: {{ book.authorName }}</p>
+        <p>Wydawca: {{ book.publishingHouseName }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .book-desc {
+  position: relative;
+  min-width: 35%;
+  background-color: #242424;
+  padding: 50px;
+  border-radius: 10px;
 }
 
 .book-desc-container {
@@ -47,6 +52,18 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.book-bg:focus {
+  outline: none;
+}
+
+.book-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   background: rgba(23, 23, 23, 0.8);
 }
 
