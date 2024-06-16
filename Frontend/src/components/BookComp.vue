@@ -2,7 +2,6 @@
 import Book from "../Models/Book.ts";
 import { ref, watch } from "vue";
 
-/** @todo PO NAJECHANIU MA WYŚWIETLAĆ SZCZEGÓŁY */
 defineProps<{
   book: Book
 }>();
@@ -75,7 +74,9 @@ img {
   margin: 5px;
   border: #535bf2 3px solid;
   border-radius: 5px;
-  max-width: 32px;
+  word-wrap: break-word;
+  max-width: 38px;
+  max-height: 20vh;
   min-height: 10vh;
   min-width: 28px;
   overflow: clip;
