@@ -2,4 +2,6 @@
 
 namespace MyMiniLibrary.Interfaces;
 
-public interface ISeriesRepository : ICommonRepository<Series>;
+public interface ISeriesRepository : ICommonRepository<Series> {
+    public Task<int>    CountAsync();
+};

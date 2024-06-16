@@ -29,7 +29,8 @@ public class BookController(IBookRepository bookRepo,
         var statisticsData = new StatisticsDataDto
         {
             SumOfPrice = bookRepo.SumOfAsync().Result,
-            BookCount = bookRepo.CountAsync().Result
+            BookCount = bookRepo.CountAsync().Result,
+            SeriesCount = seriesRepo.CountAsync().Result,
         };
         
         return Ok(statisticsData);

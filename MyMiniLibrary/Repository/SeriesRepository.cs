@@ -52,4 +52,9 @@ public class SeriesRepository(ApplicationDbContext context) : ISeriesRepository 
     public Task<bool> Exists(int id) {
         return context.Series.AnyAsync(s => s.SeriesId == id);
     }
+
+    public Task<int> CountAsync()
+    {
+        return context.Series.CountAsync();
+    }
 }

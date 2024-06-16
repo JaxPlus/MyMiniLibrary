@@ -5,8 +5,6 @@ using MyMiniLibrary.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
@@ -24,7 +22,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -33,15 +30,16 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
-    context.Response.Headers.AccessControlAllowOrigin = "http://localhost:5174";
+    context.Response.Headers.AccessControlAllowOrigin = "http://localhost:5173";
     context.Response.Headers.AccessControlAllowCredentials = "true";
+    context.Response.Headers.AccessControlAllowHeaders = "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers";
+    context.Response.Headers.AccessControlAllowMethods = "GET, HEAD, OPTIONS, POST, PUT";
     await next(context);
 });
 
 app.UseCors(options => options
         .WithOrigins("http://localhost:5174")
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+        .AllowAnyMethod());
 
 app.UseHttpsRedirection();
 
